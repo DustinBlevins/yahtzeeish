@@ -9,14 +9,14 @@ public class CategoryOnes extends Category{
       return true;
    }
    
-   public int calculateScore(List<Die> dice){
+   public void setScore(List<Die> dice){
       int result = 0;
       for(Die d: dice){
          if(d.getFaceValue() == 1){
             result++;
          }
       }
-      return result;
+      value = result;
    }
    
 }

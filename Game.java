@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class Game{
    private List<Player> players;
@@ -32,6 +33,7 @@ public class Game{
       int count = 0;
       int[] intChoice = new int[0];
       do{//do while to limit the number of rerolls
+         //Collections.sort(dice);
          System.out.println("Dice = "+dice);
          System.out.print("Enter index of dice to reroll or -1 to keep all: ");
          String[] strChoice = keyboard.nextLine().split(",");
@@ -50,11 +52,11 @@ public class Game{
       for(int i=0; i<availableCategories.size(); i++){
          System.out.println((i+1)+") "+availableCategories.get(i));
       }
-      System.out.print(currentPlayer.getName()+" select an option: ");
+      System.out.print(currentPlayer+" select an option: ");
       int selection = keyboard.nextInt();
       keyboard.nextLine();
       //TODO based on selection update the scorecard
-       
+      availableCategories.get(selection-1).setScore(dice);
    }
 
    public void nextTurn(){
@@ -66,7 +68,13 @@ public class Game{
    }
 
    public Boolean isGameOver(){
-      return round > 13;
+      for(Player p: players){
+         if(p.getScorecard().availableCategories().size() > 0){
+            return false;
+         }
+      }
+      return true;
+      // return round > 13;
    }
 
    public void declareWinner(){

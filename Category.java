@@ -22,7 +22,7 @@ public abstract class Category {
    }
 
    public abstract boolean isMatch(List<Die> dice);
-   public abstract int calculateScore(List<Die> dice);
+   public abstract void setScore(List<Die> dice);
    
 
   }

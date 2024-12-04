@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Die{
+public class Die implements Comparable<Die>{
    private int faceValue;
    
    public Die(){
@@ -18,5 +18,9 @@ public class Die{
    
    public String toString(){
       return ""+faceValue;
+   }
+   
+   public int compareTo(Die other){
+      return this.faceValue - other.getFaceValue();
    }
 }

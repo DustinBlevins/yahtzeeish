@@ -23,9 +23,15 @@ public class Scorecard{
       // scoreList.add(new CategoryChance("chance"));                //add all the dice together
    }
 
-   public int calculateCategoryScore(Category category, List<Die> dice){
+   public int calculateScore(){
       //TODO Update to calculate score
-      return 0;
+      overallScore = 0;
+      for(Category c: scoreList){
+         if(!c.isAvailable()){
+            overallScore += c.getValue();
+         }
+      }
+      return overallScore;
    }
 
    public ArrayList<Category> availableCategories(){
@@ -39,6 +45,7 @@ public class Scorecard{
    }
    
    public int getOverallScore(){
+      overallScore = calculateScore();
       return overallScore;
    }
 

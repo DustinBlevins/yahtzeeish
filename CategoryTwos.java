@@ -9,14 +9,14 @@ public class CategoryTwos extends Category{
       return true;
    }
    
-   public int calculateScore(List<Die> dice){
+   public void setScore(List<Die> dice){
       int result = 0;
       for(Die d: dice){
          if(d.getFaceValue() == 2){
             result++;
          }
       }
-      return result*2;
+      value = result*2;
    }
    
 }

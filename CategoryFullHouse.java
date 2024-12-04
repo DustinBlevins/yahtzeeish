@@ -8,13 +8,17 @@ public class CategoryFullHouse extends Category{
    }
 
    public boolean isMatch(List<Die> dice){
+      ArrayList<Die> tempDice = new ArrayList<Die>();
+      tempDice.addAll(dice);
+      Collections.sort(tempDice);
       int[] counts = new int[5];
-      for(int i=0; i<dice.size(); i++){
-         counts[i] = count(dice, dice.get(i).getFaceValue());
+      for(int i=0; i<tempDice.size(); i++){
+         counts[i] = count(tempDice, tempDice.get(i).getFaceValue());
       }
-      if(findMin(counts) == 2 && findMax(counts) == 3){
-         return true;
-      }
+      System.out.println("tempDice = "+tempDice);
+      // if(findMin(counts) == 2 && findMax(counts) == 3){
+      //    return true;
+      // }
       return false;
    }
    
@@ -28,11 +32,12 @@ public class CategoryFullHouse extends Category{
       return result;
    }
    
-   public int calculateScore(List<Die> dice){
+   @Override
+   public void setScore(List<Die> dice){
       if(isMatch(dice)){
-         return 25;
+         value = 25;
       }
-      return 0;
+      value = 0;
    }
    
 }
