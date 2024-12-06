@@ -1,7 +1,7 @@
 import java.util.List;
 
-public class CategoryFullHouse extends Category{
-   public CategoryFullHouse(String n){
+public class CategoryThreeOfAKind extends Category{
+   public CategoryThreeOfAKind(String n){
       super(n);
    }
 
@@ -10,21 +10,21 @@ public class CategoryFullHouse extends Category{
       for(Die d : dice){
          counts[d.getFaceValue()]++;
       }
-      boolean hasThreeOfAKind = false;
-      boolean hasPair = false;
       for(int i = 1; i <= 6; i++){
-         if(counts[i] == 3){
-            hasThreeOfAKind = true;
-         } else if(counts[i] == 2){
-            hasPair = true;
+         if(counts[i] >= 3){
+            return true;
          }
       }
-      return hasThreeOfAKind && hasPair;
+      return false;
    }
    
    public void setScore(List<Die> dice){
       if(isMatch(dice)){
-         value = 25;
+         int total = 0;
+         for(Die d : dice){
+            total += d.getFaceValue();
+         }
+         value = total;
       } else {
          value = 0;
       }

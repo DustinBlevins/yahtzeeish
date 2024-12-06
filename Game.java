@@ -32,21 +32,33 @@ public class Game{
       }
       int count = 0;
       int[] intChoice = new int[0];
-      do{//do while to limit the number of rerolls
-         //Collections.sort(dice);
+      do{
          System.out.println("Dice = "+dice);
          System.out.print("Enter index of dice to reroll or -1 to keep all: ");
          String[] strChoice = keyboard.nextLine().split(",");
          intChoice = new int[strChoice.length];
-         for(int i=0; i<strChoice.length; i++){
-            intChoice[i] = Integer.parseInt(strChoice[i]);
+         
+         for(int i=0; i < strChoice.length; i++){
+            intChoice[i] = Integer.parseInt(strChoice[i].trim());
          }
-         System.out.println(Arrays.toString(intChoice));
+         
+         if(intChoice[0] == -1) {
+            break;
+         }
+            
+         //reroll
+        
+         for(int i : intChoice) {
+            if(i >= 0 && i < dice.size()) {
+               dice.get(i).roll();
+            }
+         }
+         
+         System.out.println("Dice after reroll = " + dice);
          count++;
-         //TODO given the array intChoice if it does not contain zero then reroll the appropriate dice
-      }while(count < 3 && intChoice[0] != -1);
-      //Now that the rolls are done, show the available options to put in the scorecard
-      //Have the user select an option and update the score
+      } while (count < 3 && intChoice[0] != -1);
+      
+      
       System.out.println("Available options are:");
       ArrayList<Category> availableCategories = currentPlayer.getScorecard().availableCategories();
       for(int i=0; i<availableCategories.size(); i++){
@@ -55,7 +67,6 @@ public class Game{
       System.out.print(currentPlayer+" select an option: ");
       int selection = keyboard.nextInt();
       keyboard.nextLine();
-      //TODO based on selection update the scorecard
       availableCategories.get(selection-1).setScore(dice);
    }
 
@@ -77,10 +88,6 @@ public class Game{
       // return round > 13;
    }
 
-   public void declareWinner(){
-      //TODO find and declare winner
-      ;
-   }
    
    public Player getCurrentPlayer(){
       return currentPlayer;
@@ -89,4 +96,30 @@ public class Game{
    public int getRound(){
       return round;
    }
+   
+   public void declareWinner() {
+      int highestScore = -1;
+      List<Player> winners = new ArrayList<>();
+      
+      for (Player player : players) {
+         int playerScore = player.getScorecard().getOverallScore();
+         if (playerScore > highestScore) {
+            highestScore = playerScore;
+            winners.clear();
+            winners.add(player);
+         }
+         else if (playerScore == highestScore) {
+            winners.add(player);
+         }
+      }
+      
+     if (winners.size() == 1) {
+        System.out.println("The winner is " + winners.get(0).getName() + " with a score of " + highestScore + "!");
+    } else {
+        System.out.println("It's a tie between:");
+        for (Player winner : winners) {
+            System.out.println("- " + winner.getName() + " with a score of " + highestScore);
+        }
+    }               
+}
 }
